@@ -21,12 +21,9 @@ var pyprocess = spawn('python',["python.py"]);
 
 util.log('readingin')
 
-for (let i = 0; i < 10; i++) {
-
 pyprocess.stdout.on('data',function(chunk){
 
     var textChunk = chunk.toString('utf8');// buffer to string
 
     util.log(textChunk);
 });
-}
