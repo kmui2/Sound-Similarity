@@ -81,11 +81,13 @@ let instructions = {
 
 var audio1Trial = {
     type: 'single-audio',
+    prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
     stimulus: '/data/sounds/34.wav'
 }
 
 var audio2Trial = {
     type: 'single-audio',
+    prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
     stimulus: '/data/sounds/35.wav'
 }
 var block = {
