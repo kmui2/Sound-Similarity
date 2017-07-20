@@ -198,7 +198,6 @@ class SimilarityJudgments(object):
 
         return message_id
 
-  ,
 class Trials(object):
     def __init__(self, seed=None, completed_csv=None):
         # Start with info for (gen i, gen i + 1) edges.
