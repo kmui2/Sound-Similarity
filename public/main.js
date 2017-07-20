@@ -79,44 +79,6 @@ let instructions = {
     ]
 };
 
-
-
-/* define test block */
-
-  // let test_stimuli = [
-  //   {
-  //     stimulus: "img/blue.png",
-  //     data: { response: 'go' }
-  //   },
-  //   {
-  //     stimulus: "img/orange.png",
-  //     data: { response: 'no-go' }
-  //   }
-  // ];
-
-  // let all_trials = jsPsych.randomization.repeat(test_stimuli, 1);
-
-
-  // function post_trial_gap() {
-  //   return Math.floor( Math.random() * 1500 ) + 750;
-  // }
-
-  // let test_block = {
-  //   type: "single-stim",
-  //   choices: ['F'],
-  //   timing_response: 1500,
-  //   timing_post_trial: post_trial_gap,
-  //   on_finish: function(data){
-  //     let correct = false;
-  //     if(data.response == 'go' && data.rt > -1){
-  //       correct = true;
-  //     } else if(data.response == 'no-go' && data.rt == -1){
-  //       correct = true;
-  //     }
-  //     jsPsych.data.addDataToLastTrial({correct: correct});
-  //   },
-  //   timeline: all_trials
-  // };
 var audio1Trial = {
     type: 'single-audio',
     stimulus: '/data/sounds/34.wav'
@@ -126,56 +88,24 @@ var audio2Trial = {
     type: 'single-audio',
     stimulus: '/data/sounds/35.wav'
 }
+var block = {
+    type: 'multi-stim-multi-response',
+    stimuli: ['img/0_source.png'],
+    choices: [[49,50,51,52,53]], // Y or N , 1 - 5
+    timing_stim: [-1],
+    prompt: 'Rate the happiness of the person on a scale of 1-5'
+}
 
-
-  /* define debrief block */
-
-  // function getSubjectData() {
-
-  //   let trials = jsPsych.data.getTrialsOfType('single-stim');
-
-  //   let sum_rt = 0;
-  //   let correct_trial_count = 0;
-  //   let correct_rt_count = 0;
-  //   for (let i = 0; i < trials.length; i++) {
-  //     if (trials[i].correct == true) {
-  //       correct_trial_count++;
-  //       if(trials[i].rt > -1){
-  //         sum_rt += trials[i].rt;
-  //         correct_rt_count++;
-  //       }
-  //     }
-  //   }
-  //   return {
-  //     rt: Math.floor(sum_rt / correct_rt_count),
-  //     accuracy: Math.floor(correct_trial_count / trials.length * 100)
-  //   }
-  // }
-
-  // let debrief_block = {
-  //   type: "text",
-  //   text: function() {
-  //     let subject_data = getSubjectData();
-  //     return "<p>You responded correctly on "+subject_data.accuracy+"% of "+
-  //     "the trials.</p><p>Your average response time was <strong>" +
-  //     subject_data.rt + "ms</strong>. Press any key to complete the "+
-  //     "experiment. Thank you!</p>";
-  //   }
-  // };
 
 
 timeline.push(instructions);
 timeline.push(audio1Trial);
 timeline.push(audio2Trial);
-// timeline.push(instructions_block);
-// timeline.push(test_block);
-// timeline.push(debrief_block);
+timeline.push(block);
 
 let endmessage = "Thank you for participating! Your completion code is " +
     participantID +
     ". Copy and paste this in MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu."
-
-
 
 jsPsych.init({
     default_iti: 0,
