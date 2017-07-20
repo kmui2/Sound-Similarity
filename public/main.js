@@ -93,7 +93,10 @@ var block = {
     stimuli: ['img/0_source.png'],
     choices: [[49,50,51,52,53]], // Y or N , 1 - 5
     timing_stim: [-1],
-    prompt: 'Rate the happiness of the person on a scale of 1-5'
+    prompt: 'Rate the happiness of the person on a scale of 1-5',
+    on_finish: function(data) {
+      console.log(String.fromCharCode(data.key_press.slice(1,3)));
+    }
 }
 
 
@@ -110,8 +113,8 @@ let endmessage = "Thank you for participating! Your completion code is " +
 jsPsych.init({
     default_iti: 0,
     timeline: timeline,
-    on_finish: function (data) {
-        jsPsych.endExperiment(endmessage);
-        saveData(participantID + ".csv", jsPsych.data.dataAsCSV())
-    }
+    // on_finish: function (data) {
+    //     jsPsych.endExperiment(endmessage);
+    //     saveData(participantID + ".csv", jsPsych.data.dataAsCSV())
+    // }
 });
