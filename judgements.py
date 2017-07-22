@@ -55,9 +55,20 @@ class Trials(object):
 
     @staticmethod
     def edges_to_sets(edges):
-        stem = lambda x: SimilarityJudgments.get_message_id_from_path(x)
+        stem = lambda x: Trials.get_message_id_from_path(x)
         return [{stem(edge.sound_x), stem(edge.sound_y)}
                 for edge in edges.itertuples()]
+
+    @staticmethod
+    def get_message_id_from_path(sound_path):
+        # e.g., 'path/to/sound/filename.wav' -> 'filename'
+        # Also needs to be able to handle sound_path == numpy.int64
+        try:
+            message_id = Path(sound_path).stem
+        except TypeError:
+            message_id = Path(int(sound_path)).stem
+
+        return message_id
 
     @staticmethod
     def determine_imitation_category(audio):
@@ -84,10 +95,10 @@ if __name__ == '__main__':
     player['datetime'] = start_time
     seed = start_time.toordinal()
 
-    fname = player['name']
+    fname = 'public/data/judgments/' + player['name'] + '.csv'
 
     # Make the trials for this participant.
-    self.trials = Trials(seed=seed, completed_csv=fname)
+    trials = Trials(seed=seed, completed_csv=fname)
 
     # judgments = SimilarityJudgments(player, overwrite=False)
     # judgments.run()
