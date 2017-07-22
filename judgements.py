@@ -99,6 +99,7 @@ if __name__ == '__main__':
 
     # Make the trials for this participant.
     trials = Trials(seed=seed, completed_csv=fname)
+    print trials.trials.to_json(orient="split")
 
     # judgments = SimilarityJudgments(player, overwrite=False)
     # judgments.run()
