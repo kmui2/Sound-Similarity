@@ -1,9 +1,8 @@
-
 let timeline = [];
 let timeline2 = [];
 
 
-let condition_string = 'explicit';//condition();
+let condition_string = 'explicit'; //condition();
 let group = 'shuffled';
 let turkInfo = jsPsych.turk.turkInfo();
 let participantID = makeid() + 'iTi' + makeid()
@@ -61,7 +60,7 @@ let instructions = {
         `<p>On each trial, you will hear two sounds played in succession. To help you distinguish them, during the first
         you will see the number 1, and during the second a number 2. After hearing the second sound, you will be asked 
         to rate how similar the two sounds are on a 7-point scale.</p>`,
-        
+
         `<p>A 7 means the sounds are nearly identical. That is, if you were to hear these two sounds played again, you would 
         likely be unable to tell whether they were in the same or different order as the first time you heard them. A 1 
         on the scale means the sounds are entirely different and you would never confuse them. Each sound in the pair 
@@ -76,7 +75,12 @@ let instructions = {
         Pressing 'q' will quit the experiment. Your progress will be saved and you can continue later. Press the SPACEBAR 
         to begin the experiment.
         </p>`
-    ]
+    ],
+    on_finish: function (data) {
+        $.post('/sounds', function (data, status) {
+            alert("Data: " + data + "\nStatus: " + status);
+        });
+    }
 };
 
 var audio1Trial = {
@@ -93,11 +97,13 @@ var audio2Trial = {
 var block = {
     type: 'multi-stim-multi-response',
     stimuli: ['img/0_source.png'],
-    choices: [[49,50,51,52,53]], // Y or N , 1 - 5
+    choices: [
+        [49, 50, 51, 52, 53]
+    ], // Y or N , 1 - 5
     timing_stim: [-1],
     prompt: 'Rate the happiness of the person on a scale of 1-5',
-    on_finish: function(data) {
-      console.log(String.fromCharCode(data.key_press.slice(1,3)));
+    on_finish: function (data) {
+        console.log(String.fromCharCode(data.key_press.slice(1, 3)));
     }
 }
 
