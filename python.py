@@ -3,6 +3,10 @@ import sys
 
 data = "this began life in python"
 print(data)
+print(data)
+print(data)
+print(data)
+print(data)
 
 f= open("null/guru99.txt","w+")
 for i in range(10):
