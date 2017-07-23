@@ -10,6 +10,7 @@ You must have nodjs installed: https://nodejs.org.
 git clone https://github.com/kmui2/jsPsych-Node
 cd jsPsych-Node
 pip install -r requirements.txt
+npm install -g nodemon
 npm install
 npm start
 ```
