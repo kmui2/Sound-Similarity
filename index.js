@@ -1,8 +1,11 @@
 var express = require('express')
 var app = express()
+const router = express.Router();
 var path = require("path");
 var PythonShell = require('python-shell');
-var pyshell = new PythonShell('python.py');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.set('port', (process.env.PORT || 8000))
 app.use(express.static(__dirname + '/public'))
@@ -17,17 +20,21 @@ app.get('/', function (request, response) {
 
 app.post('/sounds', function(req, res) {
   console.log("sounds post received");
-  PythonShell.run('python.py', function (err, results) {
-    if (err) throw err;
-    console.log('results: %j', results);
-    console.log('finished');
-  });
-
-  res.send('welcom');
+  // PythonShell.defaultOptions = { args: ['sucker'] };
+  // PythonShell.run('judgements.py', function (err, results) {
+  //   // if (err) throw err;
+  //   console.log('results: %j', results);
+  //   console.log('finished');
+  // });
+  console.log(req.body);
+  res.send(req.body);
 
 });
 
+
+
 app.post('/trials', function(req, res) {
+  console.log("trial request received");
+  console.log(req.body);
   res.send({body: 'Success'});
 })
-

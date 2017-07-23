@@ -13,5 +13,8 @@ for i in range(10):
      f.write("This is line %d\r\n" % (i+1))
 f.close() 
 
+print 'Number of arguments:', len(sys.argv), 'arguments.'
+print 'Argument List:', str(sys.argv)
+
 sys.stdout.flush()
 

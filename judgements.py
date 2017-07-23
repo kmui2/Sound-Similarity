@@ -2,6 +2,8 @@
 from datetime import datetime
 import webbrowser
 import string
+import sys
+import requests
 
 from psychopy import visual, core, event, sound, logging, gui
 from unipath import Path
@@ -78,17 +80,17 @@ class Trials(object):
         return categories.reindex(audio).category.tolist()
 
 
-def get_player_info():
-    info = {'Name': ''}
-    dlg = gui.DlgFromDict(info, title='Similarity Judgments')
-    if not dlg.OK:
-        core.quit()
+def get_player_info(name):
+    info = {'Name': name}
+    # dlg = gui.DlgFromDict(info, title='Similarity Judgments')
+    # if not dlg.OK:
+    #     core.quit()
     clean = {key.lower(): value for key, value in info.items()}
     return clean
 
 
 if __name__ == '__main__':
-    player = get_player_info()
+    player = get_player_info(sys.argv[1])
 
     # Gets time
     start_time = datetime.now()
@@ -99,6 +101,8 @@ if __name__ == '__main__':
 
     # Make the trials for this participant.
     trials = Trials(seed=seed, completed_csv=fname)
+    r = requests.post('http://localhost:8000/trials', data = {'key': trials.trials.to_json(orient="split")})
+
     print trials.trials.to_json(orient="split")
 
     # judgments = SimilarityJudgments(player, overwrite=False)
