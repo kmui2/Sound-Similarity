@@ -51,7 +51,7 @@ timeline.push(loop_node)
 
 
 
-
+let trialsReceived = false;
 let instructions = {
     type: "instructions",
     key_forward: ' ',
@@ -84,9 +84,21 @@ let instructions = {
             data: JSON.stringify({number:1}),
             success: function(data) {
                 console.log(data);
+                trialsReceived = true;
+                alert("You may now click on the button.")
             }
         })
     }
+};
+
+// declare the block.
+var loadingTrials = {
+  type:'html',
+  url: "loading.html",
+  cont_btn: "start",
+  check_fn: function() {
+      return trialsReceived;
+  }
 };
 
 var audio1Trial = {
@@ -113,9 +125,8 @@ var block = {
     }
 }
 
-
-
 timeline.push(instructions);
+timeline.push(loadingTrials);
 timeline.push(audio1Trial);
 timeline.push(audio2Trial);
 timeline.push(block);
@@ -127,8 +138,8 @@ let endmessage = "Thank you for participating! Your completion code is " +
 jsPsych.init({
     default_iti: 0,
     timeline: timeline,
-    // on_finish: function (data) {
-    //     jsPsych.endExperiment(endmessage);
-    //     saveData(participantID + ".csv", jsPsych.data.dataAsCSV())
-    // }
+    on_finish: function (data) {
+        jsPsych.endExperiment(endmessage);
+        // saveData(participantID + ".csv", jsPsych.data.dataAsCSV())
+    }
 });
