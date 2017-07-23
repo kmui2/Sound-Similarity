@@ -18,16 +18,18 @@ app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname + '/public/index.html'));
 })
 
+
+var trials = {};
+
 app.post('/sounds', function(req, res) {
   console.log("sounds post received");
-  // PythonShell.defaultOptions = { args: ['sucker'] };
-  // PythonShell.run('judgements.py', function (err, results) {
-  //   // if (err) throw err;
-  //   console.log('results: %j', results);
-  //   console.log('finished');
-  // });
-  console.log(req.body);
-  res.send(req.body);
+  PythonShell.defaultOptions = { args: ['sucker'] };
+  PythonShell.run('judgements.py', function (err, results) {
+    // if (err) throw err;
+    console.log('results: %j', results);
+    console.log('finished');
+    res.send(trials);
+  });
 
 });
 
@@ -35,6 +37,8 @@ app.post('/sounds', function(req, res) {
 
 app.post('/trials', function(req, res) {
   console.log("trial request received");
-  console.log(req.body);
+  trials = JSON.parse(req.body.data).data;
+  console.log(trials);
+  
   res.send({body: 'Success'});
 })

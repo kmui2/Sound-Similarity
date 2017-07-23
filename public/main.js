@@ -83,7 +83,7 @@ let instructions = {
             contentType: 'application/json', 
             data: JSON.stringify({number:1}),
             success: function(data) {
-                alert(data);
+                console.log(data);
             }
         })
     }

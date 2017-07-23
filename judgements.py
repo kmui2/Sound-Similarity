@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
     # Make the trials for this participant.
     trials = Trials(seed=seed, completed_csv=fname)
-    r = requests.post('http://localhost:8000/trials', data = {'key': trials.trials.to_json(orient="split")})
+    r = requests.post('http://localhost:8000/trials', data = {'data': trials.trials.to_json(orient="split")})
 
     print trials.trials.to_json(orient="split")
 
