@@ -12,3 +12,5 @@ pip install -r requirements.txt
 npm install
 npm start
 ```
+
+Then, go to http://localhost:8000
