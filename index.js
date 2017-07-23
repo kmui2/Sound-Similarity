@@ -1,12 +1,8 @@
 var express = require('express')
 var app = express()
 var path = require("path");
-
-// spawn_python.js
-var util = require("util");
-
-var spawn = require("child_process").spawn;
-var judements = spawn('python',["judements.py"]);
+var PythonShell = require('python-shell');
+var pyshell = new PythonShell('python.py');
 
 app.set('port', (process.env.PORT || 8000))
 app.use(express.static(__dirname + '/public'))
@@ -20,15 +16,18 @@ app.get('/', function (request, response) {
 })
 
 app.post('/sounds', function(req, res) {
-  
-  judements.stdout.on('data',function(chunk){
-      var textChunk = chunk.toString('utf8');// buffer to string
-      util.log(textChunk);
-      // res.send({body: 'Success Sounds'});
-      res.send('Welcome'); 
+  console.log("sounds post received");
+  PythonShell.run('python.py', function (err, results) {
+    if (err) throw err;
+    console.log('results: %j', results);
+    console.log('finished');
   });
+
+  res.send('welcom');
+
 });
 
 app.post('/trials', function(req, res) {
   res.send({body: 'Success'});
 })
+
