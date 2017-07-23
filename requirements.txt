@@ -1,0 +1,4 @@
+PsychoPy==1.84.2
+pandas==0.18.0
+Unipath==1.1
+requests==2.18.1
