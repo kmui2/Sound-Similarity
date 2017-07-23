@@ -1,4 +1,6 @@
-PsychoPy==1.84.2
 pandas==0.18.0
 Unipath==1.1
 requests==2.18.1
+configobj==5.0.6
+pyglet==1.2.4
+numpy==1.13.1

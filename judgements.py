@@ -5,7 +5,6 @@ import string
 import sys
 import requests
 
-from psychopy import visual, core, event, sound, logging, gui
 from unipath import Path
 import pandas
 import numpy
@@ -50,9 +49,6 @@ class Trials(object):
                                        index=edges.index)
                                .apply(lambda x: x not in completed_edges))
         unfinished = edges[is_unfinished]
-        logging.critical('Already completed {} of {} total trials ({} left)'.format(
-            (~is_unfinished).sum(), len(edges), len(unfinished)
-        ))
         return unfinished
 
     @staticmethod
