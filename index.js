@@ -24,9 +24,10 @@ app.post('/sounds', function(req, res) {
   judements.stdout.on('data',function(chunk){
       var textChunk = chunk.toString('utf8');// buffer to string
       util.log(textChunk);
+      // res.send({body: 'Success Sounds'});
+      res.send('Welcome'); 
   });
-  res.send({body: 'Success'});
-})
+});
 
 app.post('/trials', function(req, res) {
   res.send({body: 'Success'});

@@ -77,9 +77,15 @@ let instructions = {
         </p>`
     ],
     on_finish: function (data) {
-        $.post('/sounds', function (data, status) {
-            alert("Data: " + data + "\nStatus: " + status);
-        });
+        $.ajax({
+            url: '/sounds', 
+            type: 'POST', 
+            contentType: 'application/json', 
+            data: JSON.stringify({number:1}),
+            success: function(data) {
+                alert(data);
+            }
+        })
     }
 };
 
