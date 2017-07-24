@@ -3,7 +3,7 @@ $(document).ready(function(){
     $("form").submit(function(){
         // alert($("#firstName").val());
         $("form").remove();
-        $("#loading").html('Loading images... please wait. </br> <img src="img/preloader.gif">')
+        $("#loading").html('Loading trials... please wait. </br> <img src="img/preloader.gif">')
         $.ajax({
             url: '/sounds',
             type: 'POST',
