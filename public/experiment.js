@@ -85,6 +85,7 @@ function runExperiment(trials) {
     timeline.push(instructions);
 
     _.forEach(trials, (trial) => {
+        let nested_timeline = [];
         let response = {
             Name: 'maggie',
             Block_ix: trial[5],
@@ -115,12 +116,11 @@ function runExperiment(trials) {
             type: 'multi-stim-multi-response',
             stimuli: ['img/0_source.png'],
             choices: [
-                [49, 50, 51, 52, 53]
+                [49, 50, 51, 52, 53, 82]
             ], // Y or N , 1 - 5
             timing_stim: [-1],
             prompt: 'Rate the happiness of the person on a scale of 1-5',
             on_finish: function (data) {
-                console.log(data);
                 response.Repeat++;
                 response.Similarity = String.fromCharCode(data.key_press.slice(1, 3));
                 response.Datetime = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -129,14 +129,29 @@ function runExperiment(trials) {
         }
 
         if (trial[3] == 1) {
-            timeline.push(audio1Trial);
-            timeline.push(audio2Trial);
+            nested_timeline.push(audio1Trial);
+            nested_timeline.push(audio2Trial);
         }
         else {
-            timeline.push(audio2Trial);
-            timeline.push(audio1Trial);
+            nested_timeline.push(audio2Trial);
+            nested_timeline.push(audio1Trial);
         }
-        timeline.push(block);
+        nested_timeline.push(block);
+
+        var repeat_trial = {
+            timeline: nested_timeline,
+            loop_function: function(data){
+                if(jsPsych.pluginAPI.convertKeyCharacterToKeyCode('r') == jsPsych.data.getLastTrialData().key_press.slice(1,3)){
+                    console.log("repeated!");
+                    console.log(jsPsych.data.getLastTrialData());
+                    return true;
+                } else {
+                    console.log(jsPsych.data.getLastTrialData());
+                    return false;
+                }
+            }
+        }
+        timeline.push(repeat_trial);    
     })
 
 
