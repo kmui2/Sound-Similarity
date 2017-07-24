@@ -89,43 +89,6 @@ let instructions = {
                 console.log(data);
                 trials = data;
 
-                _.forEach(trials, (trial) => {
-                    console.log(trial);
-
-                    let audio1Trial = {
-                        type: 'single-audio',
-                        prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
-                        stimulus: trial[1].slice(2)
-                    }
-
-                    let audio2Trial = {
-                        type: 'single-audio',
-                        prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
-                        stimulus: trial[2].slice(2)
-                    }
-
-                    let block = {
-                        type: 'multi-stim-multi-response',
-                        stimuli: ['img/0_source.png'],
-                        choices: [
-                            [49, 50, 51, 52, 53]
-                        ], // Y or N , 1 - 5
-                        timing_stim: [-1],
-                        prompt: 'Rate the happiness of the person on a scale of 1-5',
-                        on_finish: function (data) {
-                            console.log(String.fromCharCode(data.key_press.slice(1, 3)));
-                        }
-                    }
-
-                    if (trial[3] == 0) {
-                        audioTimeline.push(audio1Trial);
-                        audioTimeline.push(audio2Trial);
-                    } else {
-                        audioTimeline.push(audio2Trial);
-                        audioTimeline.push(audio1Trial);
-                    }
-                    audioTimeline.push(block);
-                })
             
                 trialsReceived = true;
                 alert("You may now click on the button.")
@@ -153,6 +116,51 @@ initTimeline.push(loadingTrials);
 
 
 
+let audio1Trial = {
+    type: 'single-audio',
+    prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
+    // stimulus: trial[1].slice(2),
+    stimulus: '/data/sounds/34.wav'
+}
+
+let audio2Trial = {
+    type: 'single-audio',
+    prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
+    // stimulus: trial[2].slice(2)
+    stimulus: '/data/sounds/35.wav'
+}
+
+let block = {
+    type: 'multi-stim-multi-response',
+    stimuli: ['img/0_source.png'],
+    choices: [
+        [49, 50, 51, 52, 53]
+    ], // Y or N , 1 - 5
+    timing_stim: [-1],
+    prompt: 'Rate the happiness of the person on a scale of 1-5',
+    on_finish: function (data) {
+        console.log(String.fromCharCode(data.key_press.slice(1, 3)));
+    }
+}
+
+
+
+var trial = {
+    type: 'text',
+    text: 'Hello. This is in a loop. Press R to repeat this trial, or C to continue.'
+}
+
+var loop = {
+    timeline: [audio1Trial, audio2Trial, block],
+    loop_function: function(data){
+        return true;
+    }
+}
+
+initTimeline.push(loop);
+
+
+
 let endmessage = "Thank you for participating! Your completion code is " +
     participantID +
     ". Copy and paste this in MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu."
@@ -161,15 +169,9 @@ jsPsych.init({
     default_iti: 0,
     timeline: initTimeline,
     on_finish: function (data) {
-        // jsPsych.endExperiment(endmessage);
+        jsPsych.endExperiment(endmessage);
         // saveData(participantID + ".csv", jsPsych.data.dataAsCSV())
         console.log("finished initTimeline");
-        jsPsych.init({
-            default_iti: 0,
-            timeline: audioTimeline,
-            on_finish: function (data) {
-                jsPsych.endExperiment(endmessage);
-            }
-        })
+        
     }
 });
