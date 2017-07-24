@@ -34,16 +34,7 @@ function runExperiment(trials) {
             $("#loading").remove();
         },
         loop_function: function () {
-            let wdth = document.documentElement.clientWidth;
-            let hght = document.documentElement.clientHeight;
-            let availWdth = window.screen.availWidth;
-            let availHght = window.screen.availHeight;
-            console.log("heightratio:", hght / availHght);
-            if (hght / availHght > 0.9 & hght > 740) {
-                return false;
-            } else {
-                return true;
-            }
+            return false;
         }
     };
 
@@ -83,6 +74,7 @@ function runExperiment(trials) {
         let nested_timeline = [];
         let response = {
             Name: 'maggie',
+            Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
             Block_ix: trial[5],
             Trial_ix: trial[0],
             Sound_x: trial[1].match(/\d+/)[0],
@@ -90,7 +82,6 @@ function runExperiment(trials) {
             Reversed: trial[3],
             Category: trial[4],
             Similarity: -1,
-            Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
             Notes: 'None',
             Repeat: -1
         };
@@ -142,6 +133,17 @@ function runExperiment(trials) {
                     return true;
                 } else {
                     // TODO HTTP request here
+                    $.ajax({
+                        url: '/record',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(response),
+                        success: function (trials) {
+                            
+                            console.log(trials);
+                            runExperiment(trials);
+                        }
+                    })
                     return false;
                 }
             }

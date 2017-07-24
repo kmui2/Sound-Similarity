@@ -4,6 +4,12 @@ const router = express.Router();
 var path = require("path");
 var PythonShell = require('python-shell');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var csvWriter = require("csv-write-stream");
+var writer = csvWriter({sendHeaders: false});
+
+  writer.pipe(fs.createWriteStream('public/data/judgments/sucker2.csv', {flags: 'a'}))
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -44,7 +50,9 @@ app.post('/trials', function(req, res) {
 
 app.post('/record', function(req, res) {
   console.log("record request received");
-  console.log(req.body.data);
-  
+  console.log(req.body);
+  let response = req.body;
+  writer.write(response)
+  // writer.end()
   res.send({body: 'Success'});
 })
