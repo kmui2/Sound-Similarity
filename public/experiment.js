@@ -85,6 +85,18 @@ function runExperiment(trials) {
     timeline.push(instructions);
 
     _.forEach(trials, (trial) => {
+        let response = {
+            Name: 'maggie',
+            Block_ix: trial[5],
+            Trial_ix: trial[0],
+            Sound_x: trial[1].match(/\d+/)[0],
+            Sound_y: trial[2].match(/\d+/)[0],
+            Reversed: trial[3],
+            Category: trial[4],
+            Similarity: -1,
+            Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            Repeat: -1
+        };
         let audio1Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
@@ -95,7 +107,7 @@ function runExperiment(trials) {
         let audio2Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
-            stimulus: trial[2].slice(2)
+            stimulus: trial[2].slice(2),
             // stimulus: '/data/sounds/35.wav'
         }
 
@@ -108,11 +120,22 @@ function runExperiment(trials) {
             timing_stim: [-1],
             prompt: 'Rate the happiness of the person on a scale of 1-5',
             on_finish: function (data) {
-                console.log(String.fromCharCode(data.key_press.slice(1, 3)));
+                console.log(data);
+                response.Repeat++;
+                response.Similarity = String.fromCharCode(data.key_press.slice(1, 3));
+                response.Datetime = moment().format('MMMM Do YYYY, h:mm:ss a');
+                console.log(response);
             }
         }
-        timeline.push(audio1Trial);
-        timeline.push(audio2Trial);
+
+        if (trial[3] == 1) {
+            timeline.push(audio1Trial);
+            timeline.push(audio2Trial);
+        }
+        else {
+            timeline.push(audio2Trial);
+            timeline.push(audio1Trial);
+        }
         timeline.push(block);
     })
 
