@@ -1,5 +1,6 @@
-let timeline = [];
+let initTimeline = [];
 let timeline2 = [];
+let audioTimeline = [];
 
 
 let condition_string = 'explicit'; //condition();
@@ -46,11 +47,11 @@ let loop_node = {
     }
 };
 
-timeline.push(loop_node)
+initTimeline.push(loop_node)
 
 
 
-
+let trials = {};
 let trialsReceived = false;
 let instructions = {
     type: "instructions",
@@ -78,12 +79,54 @@ let instructions = {
     ],
     on_finish: function (data) {
         $.ajax({
-            url: '/sounds', 
-            type: 'POST', 
-            contentType: 'application/json', 
-            data: JSON.stringify({number:1}),
-            success: function(data) {
+            url: '/sounds',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                number: 1
+            }),
+            success: function (data) {
                 console.log(data);
+                trials = data;
+
+                _.forEach(trials, (trial) => {
+                    console.log(trial);
+
+                    let audio1Trial = {
+                        type: 'single-audio',
+                        prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
+                        stimulus: trial[1].slice(2)
+                    }
+
+                    let audio2Trial = {
+                        type: 'single-audio',
+                        prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
+                        stimulus: trial[2].slice(2)
+                    }
+
+                    let block = {
+                        type: 'multi-stim-multi-response',
+                        stimuli: ['img/0_source.png'],
+                        choices: [
+                            [49, 50, 51, 52, 53]
+                        ], // Y or N , 1 - 5
+                        timing_stim: [-1],
+                        prompt: 'Rate the happiness of the person on a scale of 1-5',
+                        on_finish: function (data) {
+                            console.log(String.fromCharCode(data.key_press.slice(1, 3)));
+                        }
+                    }
+
+                    if (trial[3] == 0) {
+                        audioTimeline.push(audio1Trial);
+                        audioTimeline.push(audio2Trial);
+                    } else {
+                        audioTimeline.push(audio2Trial);
+                        audioTimeline.push(audio1Trial);
+                    }
+                    audioTimeline.push(block);
+                })
+            
                 trialsReceived = true;
                 alert("You may now click on the button.")
             }
@@ -91,45 +134,24 @@ let instructions = {
     }
 };
 
+initTimeline.push(instructions);
+
+
+
 // declare the block.
 var loadingTrials = {
-  type:'html',
-  url: "loading.html",
-  cont_btn: "start",
-  check_fn: function() {
-      return trialsReceived;
-  }
+    type: 'html',
+    url: "loading.html",
+    cont_btn: "start",
+    check_fn: function () {
+        return trialsReceived;
+    },
+    // timeline: nested_timeline
 };
 
-var audio1Trial = {
-    type: 'single-audio',
-    prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
-    stimulus: '/data/sounds/34.wav'
-}
+initTimeline.push(loadingTrials);
 
-var audio2Trial = {
-    type: 'single-audio',
-    prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
-    stimulus: '/data/sounds/35.wav'
-}
-var block = {
-    type: 'multi-stim-multi-response',
-    stimuli: ['img/0_source.png'],
-    choices: [
-        [49, 50, 51, 52, 53]
-    ], // Y or N , 1 - 5
-    timing_stim: [-1],
-    prompt: 'Rate the happiness of the person on a scale of 1-5',
-    on_finish: function (data) {
-        console.log(String.fromCharCode(data.key_press.slice(1, 3)));
-    }
-}
 
-timeline.push(instructions);
-timeline.push(loadingTrials);
-timeline.push(audio1Trial);
-timeline.push(audio2Trial);
-timeline.push(block);
 
 let endmessage = "Thank you for participating! Your completion code is " +
     participantID +
@@ -137,9 +159,17 @@ let endmessage = "Thank you for participating! Your completion code is " +
 
 jsPsych.init({
     default_iti: 0,
-    timeline: timeline,
+    timeline: initTimeline,
     on_finish: function (data) {
-        jsPsych.endExperiment(endmessage);
+        // jsPsych.endExperiment(endmessage);
         // saveData(participantID + ".csv", jsPsych.data.dataAsCSV())
+        console.log("finished initTimeline");
+        jsPsych.init({
+            default_iti: 0,
+            timeline: audioTimeline,
+            on_finish: function (data) {
+                jsPsych.endExperiment(endmessage);
+            }
+        })
     }
 });

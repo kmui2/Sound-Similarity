@@ -18,7 +18,6 @@ app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname + '/public/index.html'));
 })
 
-
 var trials = {};
 
 app.post('/sounds', function(req, res) {
