@@ -99,7 +99,8 @@ let instructions = {
 
 initTimeline.push(instructions);
 
-
+let trial = ['','../data/sounds/34.wav','../data/sounds/34.wav',''];
+let trialNum = 0;
 
 // declare the block.
 var loadingTrials = {
@@ -109,6 +110,9 @@ var loadingTrials = {
     check_fn: function () {
         return trialsReceived;
     },
+    on_finish: function() {
+        trial = trials[0];
+    }
     // timeline: nested_timeline
 };
 
@@ -119,15 +123,15 @@ initTimeline.push(loadingTrials);
 let audio1Trial = {
     type: 'single-audio',
     prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
-    // stimulus: trial[1].slice(2),
-    stimulus: '/data/sounds/34.wav'
+    stimulus: trial[1].slice(2),
+    // stimulus: '/data/sounds/34.wav'
 }
 
 let audio2Trial = {
     type: 'single-audio',
     prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
-    // stimulus: trial[2].slice(2)
-    stimulus: '/data/sounds/35.wav'
+    stimulus: trial[2].slice(2)
+    // stimulus: '/data/sounds/35.wav'
 }
 
 let block = {
@@ -139,16 +143,18 @@ let block = {
     timing_stim: [-1],
     prompt: 'Rate the happiness of the person on a scale of 1-5',
     on_finish: function (data) {
+        trialNum++;
+        trial = trials[trialNum];
         console.log(String.fromCharCode(data.key_press.slice(1, 3)));
     }
 }
 
 
 
-var trial = {
-    type: 'text',
-    text: 'Hello. This is in a loop. Press R to repeat this trial, or C to continue.'
-}
+// var trial = {
+//     type: 'text',
+//     text: 'Hello. This is in a loop. Press R to repeat this trial, or C to continue.'
+// }
 
 var loop = {
     timeline: [audio1Trial, audio2Trial, block],
