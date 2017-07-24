@@ -41,3 +41,10 @@ app.post('/trials', function(req, res) {
   
   res.send({body: 'Success'});
 })
+
+app.post('/record', function(req, res) {
+  console.log("record request received");
+  console.log(req.body.data);
+  
+  res.send({body: 'Success'});
+})

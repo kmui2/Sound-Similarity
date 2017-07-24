@@ -25,12 +25,7 @@ function runExperiment(trials) {
         type: "text",
         cont_key: ' ',
         text: `<h1>Judge the similarity between two sounds</h1>
-        <p>Welcome to the experiment. Please maximize this window, then press SPACE to begin.</p>
-        <p>The experiment will not procede if this window is less than 740 pixels high or if this window is less than 90% 
-        your available screen height.</p>
-        <p>If the experiment doesn't begin when you hit SPACE but you have maximized this window, then your screen may be 
-        too small, or you may have too large a tool- or menu-bar taking up space.
-        If you're having trouble at this point, please just return the HIT.</p>`
+        <p>Welcome to the experiment. Press SPACE to begin.</p>`
     };
 
     let loop_node = {
@@ -63,14 +58,14 @@ function runExperiment(trials) {
         pages: [
             `<p>On each trial, you will hear two sounds played in succession. To help you distinguish them, during the first
             you will see the number 1, and during the second a number 2. After hearing the second sound, you will be asked 
-            to rate how similar the two sounds are on a 7-point scale.</p>`,
+            to rate how similar the two sounds are on a 7-point scale.</p> ${continue_space}`,
 
             `<p>A 7 means the sounds are nearly identical. That is, if you were to hear these two sounds played again, you would 
             likely be unable to tell whether they were in the same or different order as the first time you heard them. A 1 
             on the scale means the sounds are entirely different and you would never confuse them. Each sound in the pair 
             will come from a different speaker, so try to ignore differences due to just people having different voices. For 
             example, a man and a woman saying the same word should get a high rating.
-            </p>`,
+            </p> ${continue_space}`,
 
             `<p>Please try to use as much of the scale as you can while maximizing the likelihood that if you did this again, you 
             would reach the same judgments. If you need to hear the sounds again, you can press 'r' to repeat the trial. If 
@@ -78,7 +73,7 @@ function runExperiment(trials) {
             or if you are otherwise unable to judge the similarity between the sounds, press the 'e' key to report the error. 
             Pressing 'q' will quit the experiment. Your progress will be saved and you can continue later. Press the SPACEBAR 
             to begin the experiment.
-            </p>`
+            </p> ${continue_space}`
         ]
     };
 
@@ -120,7 +115,7 @@ function runExperiment(trials) {
                 [49, 50, 51, 52, 53, 54, 55, 82]
             ], // Y or N , 1 - 5
             timing_stim: [-1],
-            prompt: 'Rate the similarity of the two sounds on a scale of 1-7.',
+            prompt: 'Rate the similarity of the two sounds on a scale of 1-7, or press "r" to repeat the trial',
             on_finish: function (data) {
                 response.Repeat++;
                 response.Similarity = String.fromCharCode(data.key_press.slice(1, 3));
@@ -144,10 +139,9 @@ function runExperiment(trials) {
             loop_function: function(data){
                 if(jsPsych.pluginAPI.convertKeyCharacterToKeyCode('r') == jsPsych.data.getLastTrialData().key_press.slice(1,3)){
                     console.log("repeated!");
-                    console.log(jsPsych.data.getLastTrialData());
                     return true;
                 } else {
-                    console.log(jsPsych.data.getLastTrialData());
+                    // TODO HTTP request here
                     return false;
                 }
             }
