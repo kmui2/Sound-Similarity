@@ -96,6 +96,7 @@ function runExperiment(trials) {
             Category: trial[4],
             Similarity: -1,
             Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            Notes: 'None',
             Repeat: -1
         };
         let audio1Trial = {
@@ -114,12 +115,12 @@ function runExperiment(trials) {
 
         let block = {
             type: 'multi-stim-multi-response',
-            stimuli: ['img/0_source.png'],
+            stimuli: ['img/speaker_icon.png'],
             choices: [
-                [49, 50, 51, 52, 53, 82]
+                [49, 50, 51, 52, 53, 54, 55, 82]
             ], // Y or N , 1 - 5
             timing_stim: [-1],
-            prompt: 'Rate the happiness of the person on a scale of 1-5',
+            prompt: 'Rate the similarity of the two sounds on a scale of 1-7.',
             on_finish: function (data) {
                 response.Repeat++;
                 response.Similarity = String.fromCharCode(data.key_press.slice(1, 3));
