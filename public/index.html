@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="jspsych-5.0.3/jspsych.js"></script>
-      <script src="jspsych-5.0.3/plugins/jspsych-html.js"></script>
+    <script src="jspsych-5.0.3/plugins/jspsych-html.js"></script>
     <script src="jspsych-5.0.3/plugins/jspsych-text.js"></script>
     <script src="jspsych-5.0.3/plugins/jspsych-text.js"></script>
     <script src="jspsych-5.0.3/plugins/jspsych-survey-text.js"></script>
@@ -19,11 +20,20 @@
     <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
     <link href="jspsych-5.0.3/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     <script src="helpers.js"></script>
-
+    <script src="experiment.js"></script>
     <script src="main.js"></script>
     <title>Document</title>
 </head>
+
 <body>
     <link rel="stylesheet" type="text/css" href="main.css" />
+    <form action="">
+        First name: <input id="firstName" type="text" name="FirstName" value="Mickey"><br>
+        Last name: <input id="lastName" type="text" name="LastName"value="Mouse"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="loading">
+    </div>
 </body>
+
 </html>
