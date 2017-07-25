@@ -51,7 +51,9 @@ app.post('/trials', function(req, res) {
   console.log(isNew);
   console.log(isNew == "True");
   if (isNew == "True") {
-    fs.appendFile('public/data/judgments/'+name+'.csv', 'name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat\n', function (err) {
+    fs.appendFile('public/data/judgments/'+name+'.csv', 
+      'name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat\n', 
+    function (err) {
       if (err) throw err;
       console.log('Appended fields!');
     } )
