@@ -72,6 +72,13 @@ function runExperiment(trials) {
 
     _.forEach(trials, (trial) => {
         let nested_timeline = [];
+        let audio1NumOrder = 1;
+        let audio2NumOrder = 2;
+        // Switch if reversed
+        if (trial[3] == 1) {
+            audio1NumOrder = 2;
+            audio2NumOrder = 1;
+        }
         let response = {
             Name: 'maggie',
             Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
@@ -87,14 +94,14 @@ function runExperiment(trials) {
         };
         let audio1Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>1</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>'+audio1NumOrder+'</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[1].slice(2),
             // stimulus: '/data/sounds/34.wav'
         }
 
         let audio2Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>2</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>'+audio2NumOrder+'</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[2].slice(2),
             // stimulus: '/data/sounds/35.wav'
         }
