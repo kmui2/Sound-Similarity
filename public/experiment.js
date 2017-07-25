@@ -85,15 +85,9 @@ function runExperiment(trials) {
             Notes: 'None',
             Repeat: -1
         };
-        let audio1Num = ((response.Reversed)%2)+1;
-        let audio2Num = ((response.Reversed+1)%2)+1;
-        console.log('Response.Reversed = '+ response.Reversed);
-        console.log('First audio: ' + audio1Num);
-        console.log('Seconds audio: ' + audio2Num);
-        
         let audio1Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>'+audio1Num+'</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>'+(((response.Reversed)%2)+1)+'</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[1].slice(2),
             // stimulus: '/data/sounds/34.wav'
             on_finish: function() {
@@ -103,7 +97,7 @@ function runExperiment(trials) {
 
         let audio2Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>'+audio2Num+'</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>'+(((response.Reversed+1)%2)+1)+'</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[2].slice(2),
             // stimulus: '/data/sounds/35.wav'
             on_finish: function() {
@@ -116,7 +110,7 @@ function runExperiment(trials) {
             stimuli: ['img/speaker_icon.png'],
             choices: [
                 [49, 50, 51, 52, 53, 54, 55, 82]
-            ], // Y or N , 1 - 5
+            ],
             timing_stim: [-1],
             prompt: 'Rate the similarity of the two sounds on a scale of 1-7, or press "r" to repeat the trial',
             on_finish: function (data) {

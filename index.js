@@ -8,8 +8,6 @@ var fs = require('fs');
 var csvWriter = require("csv-write-stream");
 var writer = csvWriter({sendHeaders: false});
 
-  writer.pipe(fs.createWriteStream('public/data/judgments/sucker2.csv', {flags: 'a'}))
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -27,8 +25,13 @@ app.get('/', function (request, response) {
 var trials = {};
 
 app.post('/sounds', function(req, res) {
+  let name = req.body.name;
   console.log("sounds post received");
-  PythonShell.defaultOptions = { args: ['sucker'] };
+  console.log("the name received is " + name);
+  
+  writer.pipe(fs.createWriteStream('public/data/judgments/'+name+'.csv', {flags: 'a'}))
+
+  PythonShell.defaultOptions = { args: [name] };
   PythonShell.run('judgements.py', function (err, results) {
     // if (err) throw err;
     console.log('results: %j', results);
