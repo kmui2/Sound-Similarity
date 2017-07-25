@@ -19,7 +19,6 @@ class Trials(object):
             previous_data = pandas.read_csv(completed_csv)
             completed_edges = Trials.edges_to_sets(previous_data)
         except ValueError, IOError:
-            logging.critical('Could not find existing data. Running all trials.')
             trials = edges  # all trials are new
         else:
             trials = Trials.remove_completed_trials(edges, completed_edges)
