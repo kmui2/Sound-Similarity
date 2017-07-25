@@ -1,12 +1,11 @@
-var express = require('express')
-var app = express()
-const router = express.Router();
-var path = require("path");
-var PythonShell = require('python-shell');
-var bodyParser = require('body-parser');
-var fs = require('fs');
-var csvWriter = require("csv-write-stream");
-var writer = csvWriter({sendHeaders: false});
+const express = require('express')
+const app = express()
+const path = require("path");
+const PythonShell = require('python-shell');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const csvWriter = require("csv-write-stream");
+const writer = csvWriter({sendHeaders: false});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -28,14 +27,9 @@ app.post('/sounds', function(req, res) {
   name = req.body.name;
   console.log("sounds post received");
   console.log("the name received is " + name);
-  
   writer.pipe(fs.createWriteStream('public/data/judgments/'+name+'.csv', {flags: 'a'}))
-
   PythonShell.defaultOptions = { args: [name] };
   PythonShell.run('judgements.py', function (err, results) {
-    // if (err) throw err;
-    // console.log('results: %j', results);
-    console.log('finished');
     res.send(trials);
   });
 
@@ -44,18 +38,12 @@ app.post('/sounds', function(req, res) {
 
 
 app.post('/trials', function(req, res) {
-  console.log("trial request received");
   trials = JSON.parse(req.body.data).data;
-  // console.log(trials);
-  let isNew = req.body.isNew;
-  console.log(isNew);
-  console.log(isNew == "True");
-  if (isNew == "True") {
+  if (req.body.isNew == "True") {
     fs.appendFile('public/data/judgments/'+name+'.csv', 
       'name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat\n', 
     function (err) {
       if (err) throw err;
-      console.log('Appended fields!');
     } )
   }
   
@@ -63,10 +51,7 @@ app.post('/trials', function(req, res) {
 })
 
 app.post('/record', function(req, res) {
-  console.log("record request received");
-  // console.log(req.body);
   let response = req.body;
   writer.write(response)
-  // writer.end()
   res.send({body: 'Success'});
 })

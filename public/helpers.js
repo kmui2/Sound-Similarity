@@ -17,16 +17,3 @@ function condition_instructions () {
         return "";
     }
 };
-
-
-function saveData(filename, filedata) {
-    $.ajax({
-        type: 'post',
-        cache: false,
-        url: 'bongarddata.php', // this is the path to the above PHP script
-        data: {
-            filename: filename,
-            filedata: filedata
-        }
-    });
-}

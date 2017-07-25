@@ -1,19 +1,14 @@
-
 function runExperiment(trials, name) {
     let timeline = [];
-    let timeline2 = [];
     let audioTimeline = [];
 
-
-    let condition_string = 'explicit'; //condition();
-    let group = 'shuffled';
     let turkInfo = jsPsych.turk.turkInfo();
     let participantID = makeid() + 'iTi' + makeid()
 
     jsPsych.data.addProperties({
         subject: participantID,
-        condition: condition_string,
-        group: group,
+        condition: 'explicit',
+        group: 'shuffled',
         workerId: turkInfo.workerId,
         assginementId: turkInfo.assignmentId,
         hitId: turkInfo.assignmentId
@@ -28,17 +23,7 @@ function runExperiment(trials, name) {
         <p>Welcome to the experiment. Press SPACE to begin.</p>`
     };
 
-    let loop_node = {
-        timeline: [welcome_block],
-        on_trial_start: function() {
-            $("#loading").remove();
-        },
-        loop_function: function () {
-            return false;
-        }
-    };
-
-    timeline.push(loop_node)
+    timeline.push(welcome_block);
 
 
 
@@ -87,20 +72,18 @@ function runExperiment(trials, name) {
         };
         let audio1Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>'+(((response.Reversed)%2)+1)+'</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>' + (((response.Reversed) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[1].slice(2),
-            // stimulus: '/data/sounds/34.wav'
-            on_finish: function() {
+            on_finish: function () {
                 console.log("that was audio1trial")
             }
         }
 
         let audio2Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>'+(((response.Reversed+1)%2)+1)+'</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>' + (((response.Reversed + 1) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[2].slice(2),
-            // stimulus: '/data/sounds/35.wav'
-            on_finish: function() {
+            on_finish: function () {
                 console.log("that was audio2trial")
             }
         }
@@ -124,8 +107,7 @@ function runExperiment(trials, name) {
         if (trial[3] == 1) {
             nested_timeline.push(audio2Trial);
             nested_timeline.push(audio1Trial);
-        }
-        else {
+        } else {
             nested_timeline.push(audio1Trial);
             nested_timeline.push(audio2Trial);
         }
@@ -133,19 +115,17 @@ function runExperiment(trials, name) {
 
         var repeat_trial = {
             timeline: nested_timeline,
-            loop_function: function(data){
-                if(jsPsych.pluginAPI.convertKeyCharacterToKeyCode('r') == jsPsych.data.getLastTrialData().key_press.slice(1,3)){
+            loop_function: function (data) {
+                if (jsPsych.pluginAPI.convertKeyCharacterToKeyCode('r') == jsPsych.data.getLastTrialData().key_press.slice(1, 3)) {
                     console.log("repeated!");
                     return true;
                 } else {
-                    // TODO HTTP request here
                     $.ajax({
                         url: '/record',
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify(response),
                         success: function (trials) {
-                            
                             console.log(trials);
                             runExperiment(trials);
                         }
@@ -154,7 +134,7 @@ function runExperiment(trials, name) {
                 }
             }
         }
-        timeline.push(repeat_trial);    
+        timeline.push(repeat_trial);
     })
 
 
@@ -170,9 +150,8 @@ function runExperiment(trials, name) {
         timeline: timeline,
         on_finish: function (data) {
             jsPsych.endExperiment(endmessage);
-            // saveData(participantID + ".csv", jsPsych.data.dataAsCSV())
             console.log("finished initTimeline");
-            
+
         }
     });
 }
