@@ -12,7 +12,7 @@ $(document).ready(function(){
             success: function (trials) {
                 
                 console.log(trials);
-                runExperiment(trials);
+                runExperiment(trials, name);
             }
         })
     });
