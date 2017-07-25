@@ -72,13 +72,6 @@ function runExperiment(trials) {
 
     _.forEach(trials, (trial) => {
         let nested_timeline = [];
-        let audio1NumOrder = 1;
-        let audio2NumOrder = 2;
-        // Switch if reversed
-        if (trial[3] == 1) {
-            audio1NumOrder = 2;
-            audio2NumOrder = 1;
-        }
         let response = {
             Name: 'maggie',
             Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
@@ -92,18 +85,30 @@ function runExperiment(trials) {
             Notes: 'None',
             Repeat: -1
         };
+        let audio1Num = ((response.Reversed)%2)+1;
+        let audio2Num = ((response.Reversed+1)%2)+1;
+        console.log('Response.Reversed = '+ response.Reversed);
+        console.log('First audio: ' + audio1Num);
+        console.log('Seconds audio: ' + audio2Num);
+        
         let audio1Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>'+audio1NumOrder+'</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>'+audio1Num+'</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[1].slice(2),
             // stimulus: '/data/sounds/34.wav'
+            on_finish: function() {
+                console.log("that was audio1trial")
+            }
         }
 
         let audio2Trial = {
             type: 'single-audio',
-            prompt: '<div class="center"><h1>'+audio2NumOrder+'</h1><img src="img/speaker_icon.png" /></div>',
+            prompt: '<div class="center"><h1>'+audio2Num+'</h1><img src="img/speaker_icon.png" /></div>',
             stimulus: trial[2].slice(2),
             // stimulus: '/data/sounds/35.wav'
+            on_finish: function() {
+                console.log("that was audio2trial")
+            }
         }
 
         let block = {
@@ -123,12 +128,12 @@ function runExperiment(trials) {
         }
 
         if (trial[3] == 1) {
-            nested_timeline.push(audio1Trial);
             nested_timeline.push(audio2Trial);
+            nested_timeline.push(audio1Trial);
         }
         else {
-            nested_timeline.push(audio2Trial);
             nested_timeline.push(audio1Trial);
+            nested_timeline.push(audio2Trial);
         }
         nested_timeline.push(block);
 
