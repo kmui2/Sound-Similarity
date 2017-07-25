@@ -23,9 +23,9 @@ app.get('/', function (request, response) {
 })
 
 var trials = {};
-
+let name = '';
 app.post('/sounds', function(req, res) {
-  let name = req.body.name;
+  name = req.body.name;
   console.log("sounds post received");
   console.log("the name received is " + name);
   
@@ -34,7 +34,7 @@ app.post('/sounds', function(req, res) {
   PythonShell.defaultOptions = { args: [name] };
   PythonShell.run('judgements.py', function (err, results) {
     // if (err) throw err;
-    console.log('results: %j', results);
+    // console.log('results: %j', results);
     console.log('finished');
     res.send(trials);
   });
@@ -46,14 +46,23 @@ app.post('/sounds', function(req, res) {
 app.post('/trials', function(req, res) {
   console.log("trial request received");
   trials = JSON.parse(req.body.data).data;
-  console.log(trials);
+  // console.log(trials);
+  let isNew = req.body.isNew;
+  console.log(isNew);
+  console.log(isNew == "True");
+  if (isNew == "True") {
+    fs.appendFile('public/data/judgments/'+name+'.csv', 'name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat\n', function (err) {
+      if (err) throw err;
+      console.log('Appended fields!');
+    } )
+  }
   
   res.send({body: 'Success'});
 })
 
 app.post('/record', function(req, res) {
   console.log("record request received");
-  console.log(req.body);
+  // console.log(req.body);
   let response = req.body;
   writer.write(response)
   // writer.end()

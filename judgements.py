@@ -11,6 +11,8 @@ import numpy
 
 class Trials(object):
     def __init__(self, seed=None, completed_csv=None):
+        
+        self.isNew = False;
         # Start with info for (gen i, gen i + 1) edges.
         edges = pandas.read_csv('linear_edges.csv')
 
@@ -19,6 +21,7 @@ class Trials(object):
             previous_data = pandas.read_csv(completed_csv)
             completed_edges = Trials.edges_to_sets(previous_data)
         except ValueError, IOError:
+            self.isNew = True
             trials = edges  # all trials are new
         else:
             trials = Trials.remove_completed_trials(edges, completed_edges)
@@ -96,7 +99,7 @@ if __name__ == '__main__':
 
     # Make the trials for this participant.
     trials = Trials(seed=seed, completed_csv=fname)
-    r = requests.post('http://localhost:8000/trials', data = {'data': trials.trials.to_json(orient="split")})
+    r = requests.post('http://localhost:8000/trials', data = {'data': trials.trials.to_json(orient="split"), 'isNew': str(trials.isNew) })
 
     print trials.trials.to_json(orient="split")
 
