@@ -68,38 +68,32 @@ function runExperiment(trials, name) {
             Category: trial[4],
             Similarity: -1,
             Notes: 'None',
-            Repeat: -1
+            Repeat: -1,
+            Response_time: -1
         };
         let audio1Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>' + (((response.Reversed) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
-            stimulus: trial[1].slice(2),
-            on_finish: function () {
-                console.log("that was audio1trial")
-            }
+            stimulus: trial[1].slice(2)
         }
 
         let audio2Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>' + (((response.Reversed + 1) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
-            stimulus: trial[2].slice(2),
-            on_finish: function () {
-                console.log("that was audio2trial")
-            }
+            stimulus: trial[2].slice(2)
         }
 
         let block = {
-            type: 'multi-stim-multi-response',
-            stimuli: ['img/speaker_icon.png'],
-            choices: [
-                [49, 50, 51, 52, 53, 54, 55, 82]
-            ],
+            type: 'button-response',
+            stimulus:'img/speaker_icon.png',
+            choices: ['1', '2', '3', '4', '5', '6', '7', 'Repeat'],
             timing_stim: [-1],
-            prompt: 'Rate the similarity of the two sounds on a scale of 1-7, or press "r" to repeat the trial',
+            prompt: 'Rate the similarity of the two sounds on a scale of 1-7 or repeat the trial',
             on_finish: function (data) {
                 response.Repeat++;
-                response.Similarity = String.fromCharCode(data.key_press.slice(1, 3));
+                response.Similarity = data.button_pressed + 1; // buttons are 0 indexed
                 response.Datetime = moment().format('MMMM Do YYYY, h:mm:ss a');
+                response.Response_time = data.rt;
                 console.log(response);
             }
         }
@@ -116,7 +110,7 @@ function runExperiment(trials, name) {
         var repeat_trial = {
             timeline: nested_timeline,
             loop_function: function (data) {
-                if (jsPsych.pluginAPI.convertKeyCharacterToKeyCode('r') == jsPsych.data.getLastTrialData().key_press.slice(1, 3)) {
+                if (jsPsych.data.getLastTrialData().button_pressed == 7) {
                     console.log("repeated!");
                     return true;
                 } else {
