@@ -3,8 +3,9 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
     let audioTimeline = [];
 
     let turkInfo = jsPsych.turk.turkInfo();
-    let participantID = makeid() + 'iTi' + makeid()
 
+    let participantID = makeid() + 'iTi' + makeid()
+    
     jsPsych.data.addProperties({
         subject: participantID,
         condition: 'explicit',
@@ -139,13 +140,11 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
     })
 
 
+    let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
+            MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.`
+    
 
-
-
-    let endmessage = "Thank you for participating! Your completion code is " +
-        participantID +
-        ". Copy and paste this in MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu."
-
+    
     jsPsych.init({
         default_iti: 0,
         timeline: timeline,
