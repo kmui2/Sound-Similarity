@@ -41,7 +41,7 @@ app.post('/trials', function(req, res) {
   trials = JSON.parse(req.body.data).data;
   if (req.body.isNew == "True") {
     fs.appendFile('public/data/judgments/'+name+'.csv', 
-      'name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat,response_time\n', 
+      'name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat,response_time,workerId,assignmentId,hitId\n', 
     function (err) {
       if (err) throw err;
     } )

@@ -1,4 +1,4 @@
-function runExperiment(trials, name) {
+function runExperiment(trials, name, workerId, assignmentId, hitId) {
     let timeline = [];
     let audioTimeline = [];
 
@@ -57,6 +57,8 @@ function runExperiment(trials, name) {
 
     _.forEach(trials, (trial) => {
         let nested_timeline = [];
+        console.log(trial[1])
+        console.log(trial[1].match(/\d+/));
         let response = {
             Name: name,
             Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
@@ -69,7 +71,10 @@ function runExperiment(trials, name) {
             Similarity: -1,
             Notes: 'None',
             Repeat: -1,
-            Response_time: -1
+            Response_time: -1,
+            workerId: workerId,
+            assignmentId: assignmentId,
+            hitId: hitId
         };
         let audio1Trial = {
             type: 'single-audio',
