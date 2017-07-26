@@ -74,13 +74,15 @@ function runExperiment(trials, name) {
         let audio1Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>' + (((response.Reversed) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
-            stimulus: trial[1].slice(2)
+            stimulus: trial[1].slice(2),
+            timing_response: 3000
         }
 
         let audio2Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>' + (((response.Reversed + 1) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
-            stimulus: trial[2].slice(2)
+            stimulus: trial[2].slice(2),
+            timing_response: 3000
         }
 
         let block = {
