@@ -58,8 +58,6 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
 
     _.forEach(trials, (trial) => {
         let nested_timeline = [];
-        console.log(trial[1])
-        console.log(trial[1].match(/\d+/));
         let response = {
             Name: name,
             Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
