@@ -4,7 +4,11 @@ $(document).ready(function(){
     // This listens to the form on-submit action
     $("form").submit(function(){
 
-        // Define your workerId, assignmentId, and hitId here
+
+        
+        //////////////////////////////////////////
+        // DEFINE workerId, hitId, assignmentId HERE
+        //////////////////////////////////////////
         let name = $("#firstName").val().slice();
         let workerId = '';
         let assignmentId = '';
