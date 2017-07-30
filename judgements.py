@@ -20,7 +20,7 @@ class Trials(object):
             # TODO Need to make completed and previous data files
             previous_data = pandas.read_csv(completed_csv)
             completed_edges = Trials.edges_to_sets(previous_data)
-        except ValueError, IOError:
+        except:
             self.isNew = True
             trials = edges  # all trials are new
         else:
@@ -88,7 +88,8 @@ def get_player_info(name):
 
 
 if __name__ == '__main__':
-    player = get_player_info(sys.argv[1])
+    name = sys.argv[1]
+    player = get_player_info(name)
 
     # Gets time
     start_time = datetime.now()
@@ -99,9 +100,9 @@ if __name__ == '__main__':
 
     # Make the trials for this participant.
     trials = Trials(seed=seed, completed_csv=fname)
-    r = requests.post('http://localhost:8000/trials', data = {'data': trials.trials.to_json(orient="split"), 'isNew': str(trials.isNew) })
+    r = requests.post('http://localhost:8000/trials', data = {'data': trials.trials.to_json(orient="split"), 'isNew': str(trials.isNew), 'name': name })
 
-    print trials.trials.to_json(orient="split")
+    print {'data': trials.trials.to_json(orient="split"), 'isNew': str(trials.isNew), 'name': name }
 
     # judgments = SimilarityJudgments(player, overwrite=False)
     # judgments.run()
