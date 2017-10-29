@@ -31,11 +31,11 @@ $(document).ready(function(){
                     sounds.push('http://'+document.domain+':'+PORT+trial[1].slice(2));
                     sounds.push('http://'+document.domain+':'+PORT+trial[2].slice(2))
                 }
-                // jsPsych.pluginAPI.preloadImages(sounds, function(){
+                jsPsych.pluginAPI.preloadImages(sounds, function(){
                     // $('#loading').remove();
                     runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
 
-                // }); 
+                }); 
             }
         })
     }); // Remove

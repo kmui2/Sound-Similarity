@@ -23,9 +23,16 @@ $(document).ready(function(){
             data: JSON.stringify({subjCode: subjCode}),
             success: function (data) {
                 console.log(data);
-                // $("#loading").remove();
+                let sounds = [];
+                for (let trial of data.trials) {
+                    sounds.push('http://'+document.domain+':'+PORT+trial[1].slice(2));
+                    sounds.push('http://'+document.domain+':'+PORT+trial[2].slice(2))
+                }
+                jsPsych.pluginAPI.preloadImages(sounds, function(){
+                    // $('#loading').remove();
+                    runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
 
-                runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
+                }); 
             }
         })
     
