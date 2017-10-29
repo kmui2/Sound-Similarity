@@ -1,0 +1,3 @@
+subjCode,Datetime,Block_ix,Trial_ix,Sound_x,Sound_y,Reversed,Category,Similarity,Notes,Repeat,Response_time,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:30:04 pm",1,1,62,181,0,tear,1,None,0,987,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:30:11 pm",1,2,185,238,1,tear,1,None,0,1202,workerId,assignmentId,hitId

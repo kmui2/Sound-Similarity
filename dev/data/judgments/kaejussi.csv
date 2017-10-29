@@ -1,0 +1,4 @@
+name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat,response_time,workerId,assignmentId,hitId
+kaejussi,"July 26th 2017, 12:15:15 pm",1,1,62,181,1,tear,3,None,0,2264,,,
+hailey,"July 26th 2017, 12:32:23 pm",1,1,70,166,1,zipper,2,None,0,3966,,,
+hailey,"July 26th 2017, 12:32:33 pm",1,2,154,241,0,zipper,6,None,0,3796,,,

@@ -1,0 +1,2 @@
+name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat
+test,"July 25th 2017, 2:35:00 am",1,1,62,181,1,tear,3,None,0

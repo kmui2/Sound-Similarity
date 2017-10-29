@@ -1,0 +1,17 @@
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+#scale{
+      position:absolute;  
+    z-index:1;
+}
+
+#canvas{
+      position:relative;
+      width:800px;
+      height:136.97px;  
+    z-index:20;
+}

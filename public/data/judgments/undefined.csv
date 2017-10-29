@@ -1,2 +1,20 @@
 name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat,response_time,workerId,assignmentId,hitId
 lisa,"July 30th 2017, 3:44:41 pm",1,1,307,348,1,glass,7,None,0,2041,,,
+subjCode,"October 28th 2017, 9:58:39 pm",1,1,62,181,0,tear,3,None,0,2720,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 9:58:46 pm",1,2,185,238,1,tear,3,None,0,1128,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 9:58:46 pm",1,2,185,238,1,tear,3,None,0,1128,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:12:53 pm",1,1,62,181,0,tear,1,None,0,1033,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:13:09 pm",1,2,185,238,1,tear,2,None,0,9990,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:13:09 pm",1,2,185,238,1,tear,2,None,0,9990,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:13:50 pm",1,1,62,181,0,tear,2,None,0,999,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:13:50 pm",1,1,62,181,0,tear,2,None,0,999,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:13:50 pm",1,1,62,181,0,tear,2,None,0,999,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:21:18 pm",1,1,62,181,0,tear,1,None,0,942,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:21:18 pm",1,1,62,181,0,tear,1,None,0,942,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:21:18 pm",1,1,62,181,0,tear,1,None,0,942,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:21:18 pm",1,1,62,181,0,tear,1,None,0,942,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:22:20 pm",1,2,185,238,1,tear,3,None,0,55623,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:22:20 pm",1,2,185,238,1,tear,3,None,0,55623,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:22:20 pm",1,2,185,238,1,tear,3,None,0,55623,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:22:20 pm",1,2,185,238,1,tear,3,None,0,55623,workerId,assignmentId,hitId
+subjCode,"October 28th 2017, 10:22:20 pm",1,2,185,238,1,tear,3,None,0,55623,workerId,assignmentId,hitId

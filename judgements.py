@@ -96,11 +96,11 @@ if __name__ == '__main__':
     player['datetime'] = start_time
     seed = start_time.toordinal()
 
-    fname = 'public/data/judgments/' + player['name'] + '.csv'
+    fname = 'dev/data/judgments/' + player['name'] + '.csv'
 
     # Make the trials for this participant.
     trials = Trials(seed=seed, completed_csv=fname)
-    r = requests.post('http://localhost:8000/trials', data = {'data': trials.trials.to_json(orient="split"), 'isNew': str(trials.isNew), 'name': name })
+    r = requests.post('http://localhost:7073/send', data = {'data': trials.trials.to_json(orient="split"), 'isNew': str(trials.isNew), 'name': name })
 
     print {'data': trials.trials.to_json(orient="split"), 'isNew': str(trials.isNew), 'name': name }
 

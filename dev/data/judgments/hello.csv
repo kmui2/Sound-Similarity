@@ -1,0 +1,8 @@
+name,datetime,block_ix,trial_ix,sound_x,sound_y,reversed,category,similarity,notes,repeat
+hello,"July 26th 2017, 11:46:59 am",1,1,62,181,1,tear,2,None,0,7658
+hello,"July 26th 2017, 11:50:32 am",1,2,185,238,0,tear,1,None,3,184220
+hello,"July 26th 2017, 11:50:41 am",1,3,86,185,1,tear,4,None,0,7447
+hello,"July 26th 2017, 11:51:40 am",1,4,486,537,1,tear,2,None,0,57253
+hello2,"July 26th 2017, 11:54:32 am",1,1,62,181,1,tear,2,None,0,2513
+hello2,"July 26th 2017, 11:54:40 am",1,2,185,238,0,tear,4,None,0,2077
+hello2,"July 26th 2017, 11:54:48 am",1,3,86,185,1,tear,7,None,0,2178
