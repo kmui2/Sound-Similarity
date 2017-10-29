@@ -58,6 +58,7 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
 
     _.forEach(trials, (trial) => {
         let nested_timeline = [];
+        console.log(trial);
         let response = {
             subjCode: name,
             Datetime: moment().format('MMMM Do YYYY, h:mm:ss a'),
