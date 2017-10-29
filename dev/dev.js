@@ -15,7 +15,7 @@ $(document).ready(function(){
         let hitId = 'hitId';
 
         $("form").remove();
-        $("#loading").html('Loading trials... please wait. </br> <img src="img/preloader.gif">')
+        $("#loading").html('<h2 style="text-align:center;">Loading trials... please wait.</h2> </br> <div  class="col-md-2 col-md-offset-5"><img src="img/preloader.gif"></div>')
         
         // This calls server to run python generate trials (judements.py) script
         // Then passes the generated trials to the experiment
@@ -31,11 +31,11 @@ $(document).ready(function(){
                     sounds.push('http://'+document.domain+':'+PORT+trial[1].slice(2));
                     sounds.push('http://'+document.domain+':'+PORT+trial[2].slice(2))
                 }
-                jsPsych.pluginAPI.preloadImages(sounds, function(){
-                    $('#loading').remove();
+                // jsPsych.pluginAPI.preloadImages(sounds, function(){
+                    // $('#loading').remove();
                     runExperiment(data.trials, subjCode, workerId, assignmentId, hitId);
 
-                }); 
+                // }); 
             }
         })
     }); // Remove

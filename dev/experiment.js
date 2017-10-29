@@ -146,6 +146,9 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
     jsPsych.init({
         default_iti: 0,
         timeline: timeline,
+        on_start_trial: function() {
+            $('#loading').remove();
+        },
         on_finish: function (data) {
             jsPsych.endExperiment(endmessage);
             console.log("finished initTimeline");
