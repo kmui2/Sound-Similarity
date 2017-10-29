@@ -21,7 +21,7 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
         type: "text",
         cont_key: ' ',
         text: `<h1>Judge the similarity between two sounds</h1>
-        <p>Welcome to the experiment. Press SPACE to begin.</p>`
+        <p class="lead">Welcome to the experiment. Press SPACE to begin.</p>`
     };
 
     timeline.push(welcome_block);
@@ -33,18 +33,18 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
         key_forward: ' ',
         key_backward: 8,
         pages: [
-            `<p>On each trial, you will hear two sounds played in succession. To help you distinguish them, during the first
+            `<p class="lead">On each trial, you will hear two sounds played in succession. To help you distinguish them, during the first
             you will see the number 1, and during the second a number 2. After hearing the second sound, you will be asked 
             to rate how similar the two sounds are on a 7-point scale.</p> ${continue_space}`,
 
-            `<p>A 7 means the sounds are nearly identical. That is, if you were to hear these two sounds played again, you would 
+            `<p class="lead">A 7 means the sounds are nearly identical. That is, if you were to hear these two sounds played again, you would 
             likely be unable to tell whether they were in the same or different order as the first time you heard them. A 1 
             on the scale means the sounds are entirely different and you would never confuse them. Each sound in the pair 
             will come from a different speaker, so try to ignore differences due to just people having different voices. For 
             example, a man and a woman saying the same word should get a high rating.
             </p> ${continue_space}`,
 
-            `<p>Please try to use as much of the scale as you can while maximizing the likelihood that if you did this again, you 
+            `<p class="lead">Please try to use as much of the scale as you can while maximizing the likelihood that if you did this again, you 
             would reach the same judgments. If you need to hear the sounds again, you can press 'r' to repeat the trial. If 
             one of the sounds is a non-verbal sound (like someone tapping on the mic), or if you only hear a single sound, 
             or if you are otherwise unable to judge the similarity between the sounds, press the 'e' key to report the error. 
@@ -78,14 +78,14 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
         let audio1Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>' + (((response.Reversed) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
-            stimulus: trial[1].slice(2),
+            stimulus: 'http://'+document.domain+':'+PORT+trial[1].slice(2),
             timing_response: 3000
         }
 
         let audio2Trial = {
             type: 'single-audio',
             prompt: '<div class="center"><h1>' + (((response.Reversed + 1) % 2) + 1) + '</h1><img src="img/speaker_icon.png" /></div>',
-            stimulus: trial[2].slice(2),
+            stimulus: 'http://'+document.domain+':'+PORT+trial[2].slice(2),
             timing_response: 3000
         }
 
@@ -94,7 +94,7 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
             stimulus:'img/speaker_icon.png',
             choices: ['1', '2', '3', '4', '5', '6', '7', 'Repeat'],
             timing_stim: [-1],
-            prompt: 'Rate the similarity of the two sounds on a scale of 1-7 or repeat the trial',
+            prompt: '<p  class="lead" style="text-align:center">Rate the similarity of the two sounds on a scale of 1-7 or repeat the trial</p>',
             on_finish: function (data) {
                 response.Repeat++;
                 response.Similarity = data.button_pressed + 1; // buttons are 0 indexed
@@ -121,7 +121,7 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
                     return true;
                 } else {
                     $.ajax({
-                        url: '/record',
+                        url: 'http://'+document.domain+':'+PORT+'/record',
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify(response),
@@ -138,14 +138,17 @@ function runExperiment(trials, name, workerId, assignmentId, hitId) {
     })
 
 
-    let endmessage = `Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
-            MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.`
+    let endmessage = `<p  class="lead">Thank you for participating! Your completion code is ${participantID}. Copy and paste this in 
+            MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu.</p>`
     
 
     
     jsPsych.init({
         default_iti: 0,
         timeline: timeline,
+        on_start_trial: function() {
+            $('#loading').remove();
+        },
         on_finish: function (data) {
             jsPsych.endExperiment(endmessage);
             console.log("finished initTimeline");
